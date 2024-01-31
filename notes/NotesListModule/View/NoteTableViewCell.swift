@@ -43,8 +43,8 @@ final class NoteTableViewCell: UITableViewCell {
     
     //MARK: Methods
     
-    func configure(with title: String) {
-        titleLabel.text = title
+    func configure(with note: NoteModel) {
+        titleLabel.text = note.title
     }
     
     private func setupUI() {

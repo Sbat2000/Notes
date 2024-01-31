@@ -21,8 +21,6 @@ class NotesViewController: UIViewController {
     
     var viewModel: NotesViewModel?
     
-    weak var notesViewControllerCoordinator: NotesViewControllerCoordinator?
-    
     //MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -37,7 +35,7 @@ class NotesViewController: UIViewController {
     //MARK: - Methods
     
     private func bind() {
-        viewModel?.$numberOfNotes.bind(action: { [weak self] _ in
+        viewModel?.$listOfNotes.bind(action: { [weak self] _ in
             self?.notesTableView.reloadData()
         })
     }
@@ -71,7 +69,7 @@ class NotesViewController: UIViewController {
 
 extension NotesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel?.numberOfNotes ?? 0
+        viewModel?.listOfNotes.count ?? 0
         
     }
     
@@ -79,7 +77,10 @@ extension NotesViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell else {
             fatalError("Unable to dequeue NoteTableViewCell")
         }
-        cell.configure(with: "Заголовок \(indexPath.row)")
+        guard let note = viewModel?.listOfNotes[indexPath.row] else {
+            fatalError("NoteModel fetch error")
+        }
+        cell.configure(with: note)
         return cell
     }
 }
@@ -89,5 +90,9 @@ extension NotesViewController: UITableViewDataSource {
 extension NotesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel?.didTapCell(indexPath: indexPath)
     }
 }

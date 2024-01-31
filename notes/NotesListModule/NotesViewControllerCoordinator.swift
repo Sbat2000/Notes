@@ -21,8 +21,13 @@ final class NotesViewControllerCoordinator: BaseCoordinator {
     override func start() {
         let notesViewController = NotesViewController()
         let viewModel = NotesViewModel()
+        viewModel.notesViewControllerCoordinator = self
         notesViewController.viewModel = viewModel
-        notesViewController.notesViewControllerCoordinator = self
         navigationController.pushViewController(notesViewController, animated: true)
+    }
+    
+    func goToNoteViewController(note: NoteModel) {
+        let noteViewControllerCoordinator = NoteViewControllerCoordinator(navigationController: navigationController, appCoordinator: appCoordinator, note: note)
+        noteViewControllerCoordinator.start()
     }
 }
