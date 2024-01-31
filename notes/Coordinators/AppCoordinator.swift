@@ -12,6 +12,7 @@ class AppCoordinator: BaseCoordinator {
     
     private var navigationController: UINavigationController = {
         let navigationController = UINavigationController()
+        navigationController.navigationBar.barTintColor = UIColor.white
         return navigationController
     }()
     

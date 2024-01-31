@@ -16,6 +16,9 @@
 		E2EB1B912B6930840046D764 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1B902B6930840046D764 /* BaseCoordinator.swift */; };
 		E2EB1B932B69309A0046D764 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1B922B69309A0046D764 /* AppCoordinator.swift */; };
 		E2EB1B952B69310B0046D764 /* NotesViewControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1B942B69310B0046D764 /* NotesViewControllerCoordinator.swift */; };
+		E2EB1B982B69BC4C0046D764 /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1B972B69BC4C0046D764 /* NotesViewModel.swift */; };
+		E2EB1B9A2B69BC570046D764 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1B992B69BC570046D764 /* NoteTableViewCell.swift */; };
+		E2EB1B9D2B69C4280046D764 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1B9C2B69C4280046D764 /* Observable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		E2EB1B902B6930840046D764 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		E2EB1B922B69309A0046D764 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E2EB1B942B69310B0046D764 /* NotesViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewControllerCoordinator.swift; sourceTree = "<group>"; };
+		E2EB1B972B69BC4C0046D764 /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
+		E2EB1B992B69BC570046D764 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
+		E2EB1B9C2B69C4280046D764 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,7 @@
 		E287597B2B692BCA00EC6927 /* notes */ = {
 			isa = PBXGroup;
 			children = (
+				E2EB1B9B2B69C41C0046D764 /* Helpers */,
 				E2EB1B962B69327A0046D764 /* NotesListModule */,
 				E2EB1B8D2B6930250046D764 /* Coordinators */,
 				E287597C2B692BCA00EC6927 /* AppDelegate.swift */,
@@ -88,8 +95,18 @@
 			children = (
 				E2EB1B942B69310B0046D764 /* NotesViewControllerCoordinator.swift */,
 				E28759802B692BCA00EC6927 /* NotesViewController.swift */,
+				E2EB1B972B69BC4C0046D764 /* NotesViewModel.swift */,
+				E2EB1B992B69BC570046D764 /* NoteTableViewCell.swift */,
 			);
 			path = NotesListModule;
+			sourceTree = "<group>";
+		};
+		E2EB1B9B2B69C41C0046D764 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB1B9C2B69C4280046D764 /* Observable.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,7 +183,10 @@
 				E2EB1B912B6930840046D764 /* BaseCoordinator.swift in Sources */,
 				E2EB1B8F2B69306F0046D764 /* Coordinator.swift in Sources */,
 				E2EB1B952B69310B0046D764 /* NotesViewControllerCoordinator.swift in Sources */,
+				E2EB1B982B69BC4C0046D764 /* NotesViewModel.swift in Sources */,
 				E28759812B692BCA00EC6927 /* NotesViewController.swift in Sources */,
+				E2EB1B9D2B69C4280046D764 /* Observable.swift in Sources */,
+				E2EB1B9A2B69BC570046D764 /* NoteTableViewCell.swift in Sources */,
 				E287597D2B692BCA00EC6927 /* AppDelegate.swift in Sources */,
 				E287597F2B692BCA00EC6927 /* SceneDelegate.swift in Sources */,
 			);
