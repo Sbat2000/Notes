@@ -20,9 +20,12 @@ final class EditViewControllerCoordinator: BaseCoordinator {
     }
     
     override func start() {
-        let viewModel = EditViewModel(noteModelFromDB: note)
-        viewModel.editViewControllerCoordinator = self
+        let viewModel = EditViewModel(noteModelFromDB: note, editViewControllerCoordinator: self)
         let editViewController = EditViewController(viewModel: viewModel)
         navigationController.pushViewController(editViewController, animated: true)
+    }
+    
+    func finish() {
+        navigationController.popViewController(animated: true)
     }
 }

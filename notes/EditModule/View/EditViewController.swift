@@ -91,12 +91,15 @@ final class EditViewController: UIViewController {
     private func bind() {
         viewModel.$currentNoteModel.bind(action: { [weak self] note in
             self?.titleTextField.text = note?.title
-            self?.noteTextView.text = note?.text
+            self?.noteTextView.attributedText = note?.text
         })
     }
     
     private func setupNavigationItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(saveButtonPressed))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отмена", style: .plain, target: self, action: #selector(cancelButtonPressed))
+        navigationItem.leftBarButtonItem?.tintColor = .red
+        
     }
     
     private func setupToolbar() {
@@ -110,7 +113,7 @@ final class EditViewController: UIViewController {
     }
     
     private func setupUI() {
-        title = "Заметка"
+        title = "Редактирование"
         view.backgroundColor = .white
         view.addSubview(titleTextField)
         view.addSubview(noteTextView)
@@ -137,6 +140,10 @@ final class EditViewController: UIViewController {
         
     }
     
+    @objc private func cancelButtonPressed() {
+        viewModel.cancelButtonPressed()
+    }
+    
     @objc private func boldText() {
          let selectedRange = noteTextView.selectedRange
 
@@ -148,8 +155,8 @@ final class EditViewController: UIViewController {
          let currentAttributes = noteTextView.attributedText.attributes(at: selectedRange.location, effectiveRange: nil)
         
         if let currentFont = currentAttributes[.font] as? UIFont {
-            let systemFont = UIFont.systemFont(ofSize: 11.5)
-            let boldSystemFont = UIFont.boldSystemFont(ofSize: 13)
+            let systemFont = UIFont.systemFont(ofSize: 16)
+            let boldSystemFont = UIFont.boldSystemFont(ofSize: 16)
             
             if currentAttributes[.font] as? UIFont == boldSystemFont {
                 let normalAttributes: [NSAttributedString.Key: Any] = [.font: systemFont]
@@ -172,8 +179,8 @@ final class EditViewController: UIViewController {
         let currentAttributes = noteTextView.attributedText.attributes(at: selectedRange.location, effectiveRange: nil)
         
         if let currentFont = currentAttributes[.font] as? UIFont {
-            let systemFont = UIFont.systemFont(ofSize: 11.5)
-            let italicSystemFont = UIFont.italicSystemFont(ofSize: 13)
+            let systemFont = UIFont.systemFont(ofSize: 16)
+            let italicSystemFont = UIFont.italicSystemFont(ofSize: 16)
             
             if currentFont == italicSystemFont {
                 let normalAttributes: [NSAttributedString.Key: Any] = [.font: systemFont]
@@ -189,11 +196,11 @@ final class EditViewController: UIViewController {
             var attributes: [NSAttributedString.Key: Any] = [:]
             
             if isBoldTextEnabled {
-                attributes[.font] = UIFont.boldSystemFont(ofSize: 13)
+                attributes[.font] = UIFont.boldSystemFont(ofSize: 16)
             }
             
             if isItalicTextEnabled {
-                attributes[.font] = UIFont.italicSystemFont(ofSize: 13)
+                attributes[.font] = UIFont.italicSystemFont(ofSize: 16)
             }
 
         noteTextView.typingAttributes = attributes

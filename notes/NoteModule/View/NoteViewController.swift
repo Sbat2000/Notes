@@ -56,7 +56,7 @@ final class NoteViewController: UIViewController {
     private func bind() {
         viewModel.$currentNoteModel.bind(action: { [weak self] note in
             self?.titleLabel.text = note?.title
-            self?.noteTextView.text = note?.text
+            self?.noteTextView.attributedText = note?.text
         })
     }
     

@@ -9,5 +9,5 @@ import Foundation
 
 struct NoteModel {
     let title: String
-    let text: String
+    let text: NSAttributedString
 }
