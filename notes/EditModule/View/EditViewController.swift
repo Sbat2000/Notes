@@ -12,6 +12,17 @@ final class EditViewController: UIViewController {
     //MARK: - Properties:
     
     let viewModel: EditViewModel
+    private var isBoldTextEnabled = false {
+        didSet {
+            boldButton.tintColor = isBoldTextEnabled ? .systemBlue : .systemGray
+        }
+    }
+    
+    private var isItalicTextEnabled = false {
+        didSet {
+            italicButton.tintColor = isBoldTextEnabled ? .systemBlue : .systemGray
+        }
+    }
     
     //MARK: - UI Elements
     
@@ -34,6 +45,25 @@ final class EditViewController: UIViewController {
         return textView
     }()
     
+    //MARK: - ToolBar Buttons
+    
+    private lazy var boldButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Жирный", style: .plain, target: self, action: #selector(boldText))
+        button.tintColor = isBoldTextEnabled ? .systemBlue : .systemGray
+        return button
+    }()
+    
+    private lazy var italicButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Курсив", style: .plain, target: self, action: #selector(italicText))
+        button.tintColor = isBoldTextEnabled ? .systemBlue : .systemGray
+        return button
+    }()
+
+    private lazy var imageButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Изображение", style: .plain, target: self, action: #selector(insertImage))
+        return button
+    }()
+    
     //MARK: - LifeCycle
     
     init(viewModel: EditViewModel) {
@@ -49,6 +79,7 @@ final class EditViewController: UIViewController {
         bind()
         setupToolbar()
         viewModel.viewWillAppear()
+        noteTextView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -71,15 +102,10 @@ final class EditViewController: UIViewController {
     private func setupToolbar() {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-
-        let boldButton = UIBarButtonItem(title: "Жирный", style: .plain, target: self, action: #selector(boldText))
-        let italicButton = UIBarButtonItem(title: "Курсив", style: .plain, target: self, action: #selector(italicText))
-        let fontButton = UIBarButtonItem(title: "Шрифт", style: .plain, target: self, action: #selector(changeFont))
-        let imageButton = UIBarButtonItem(title: "Изображение", style: .plain, target: self, action: #selector(insertImage))
-
+        
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-        toolbar.setItems([boldButton, flexSpace, italicButton, flexSpace, fontButton, flexSpace, imageButton], animated: false)
+        
+        toolbar.setItems([boldButton, flexSpace, italicButton, flexSpace, imageButton], animated: false)
         noteTextView.inputAccessoryView = toolbar
     }
     
@@ -108,21 +134,73 @@ final class EditViewController: UIViewController {
     //MARK: - Actions:
     
     @objc private func saveButtonPressed() {
-
+        
     }
     
     @objc private func boldText() {
-        // Логика для применения жирного стиля к тексту
-    }
+         let selectedRange = noteTextView.selectedRange
 
-    @objc private func italicText() {
-        // Логика для применения курсивного стиля к тексту
-    }
-
-    @objc private func changeFont() {
-        // Логика для изменения шрифта
+         guard selectedRange.length > 0 else {
+             isBoldTextEnabled.toggle()
+             return
+         }
+        
+         let currentAttributes = noteTextView.attributedText.attributes(at: selectedRange.location, effectiveRange: nil)
+        
+        if let currentFont = currentAttributes[.font] as? UIFont {
+            let systemFont = UIFont.systemFont(ofSize: 11.5)
+            let boldSystemFont = UIFont.boldSystemFont(ofSize: 13)
+            
+            if currentAttributes[.font] as? UIFont == boldSystemFont {
+                let normalAttributes: [NSAttributedString.Key: Any] = [.font: systemFont]
+                noteTextView.textStorage.addAttributes(normalAttributes, range: selectedRange)
+            } else {
+                let boldAttributes: [NSAttributedString.Key: Any] = [.font: boldSystemFont]
+                noteTextView.textStorage.addAttributes(boldAttributes, range: selectedRange)
+            }
+        }
     }
     
+    @objc private func italicText() {
+        let selectedRange = noteTextView.selectedRange
+
+        guard selectedRange.length > 0 else {
+            isItalicTextEnabled.toggle()
+            return
+        }
+        
+        let currentAttributes = noteTextView.attributedText.attributes(at: selectedRange.location, effectiveRange: nil)
+        
+        if let currentFont = currentAttributes[.font] as? UIFont {
+            let systemFont = UIFont.systemFont(ofSize: 11.5)
+            let italicSystemFont = UIFont.italicSystemFont(ofSize: 13)
+            
+            if currentFont == italicSystemFont {
+                let normalAttributes: [NSAttributedString.Key: Any] = [.font: systemFont]
+                noteTextView.textStorage.addAttributes(normalAttributes, range: selectedRange)
+            } else {
+                let italicAttributes: [NSAttributedString.Key: Any] = [.font: italicSystemFont]
+                noteTextView.textStorage.addAttributes(italicAttributes, range: selectedRange)
+            }
+        }
+    }
+    
+    private func applyTextAttributes() {
+            var attributes: [NSAttributedString.Key: Any] = [:]
+            
+            if isBoldTextEnabled {
+                attributes[.font] = UIFont.boldSystemFont(ofSize: 13)
+            }
+            
+            if isItalicTextEnabled {
+                attributes[.font] = UIFont.italicSystemFont(ofSize: 13)
+            }
+
+        noteTextView.typingAttributes = attributes
+        }
+    
+    
+    //TODO: - image insert
     @objc private func insertImage() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -136,8 +214,17 @@ final class EditViewController: UIViewController {
 extension EditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-
+            
         }
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+//MARK: - UITextViewDelegate
+
+extension EditViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        applyTextAttributes()
+        return true
     }
 }
