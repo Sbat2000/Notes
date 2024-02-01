@@ -8,20 +8,25 @@
 import UIKit
 
 final class NoteViewModel {
-    private var noteModelFromDB: NoteModel
     
-    var isEditing = false
+    private var noteModelFromDB: NoteModel
+    private let noteViewControllerCoordinator: NoteViewControllerCoordinator
     
     @Observable
     private (set) var currentNoteModel: NoteModel?
     
-    init(noteModelFromDB: NoteModel) {
+    init(noteModelFromDB: NoteModel, noteViewControllerCoordinator: NoteViewControllerCoordinator) {
         self.noteModelFromDB = noteModelFromDB
+        self.noteViewControllerCoordinator = noteViewControllerCoordinator
     }
     
     func viewWillAppear() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
             self.currentNoteModel = self.noteModelFromDB
         }
+    }
+    
+    func editButtonTapped() {
+        noteViewControllerCoordinator.goToEdit(note: noteModelFromDB)
     }
 }

@@ -20,9 +20,13 @@ final class NoteViewControllerCoordinator: BaseCoordinator {
     }
     
     override func start() {
-        let viewModel = NoteViewModel(noteModelFromDB: note)
+        let viewModel = NoteViewModel(noteModelFromDB: note, noteViewControllerCoordinator: self)
         let noteViewController = NoteViewController(viewModel: viewModel)
-        noteViewController.noteViewControllerCoordinator = self
         navigationController.pushViewController(noteViewController, animated: true)
+    }
+    
+    func goToEdit(note: NoteModel) {
+        let editViewControllerCoordinator = EditViewControllerCoordinator(navigationController: navigationController, appCoordinator: appCoordinator, note: note)
+        editViewControllerCoordinator.start()
     }
 }

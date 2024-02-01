@@ -12,7 +12,6 @@ final class NoteViewController: UIViewController {
     //MARK: - Properties:
     
     let viewModel: NoteViewModel
-    weak var noteViewControllerCoordinator: NoteViewControllerCoordinator?
     
     //MARK: - UI Elements
     
@@ -25,6 +24,7 @@ final class NoteViewController: UIViewController {
     
     private lazy var noteTextView: UITextView = {
         let textView = UITextView()
+        textView.isEditable = false
         textView.textColor = .black
         textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,7 +61,7 @@ final class NoteViewController: UIViewController {
     }
     
     private func setupNavigationItems() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Редактировать", style: .plain, target: self, action: #selector(toggleEditingMode))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Редактировать", style: .plain, target: self, action: #selector(editButtonTapped))
     }
     
     private func setupUI() {
@@ -86,22 +86,7 @@ final class NoteViewController: UIViewController {
     
     //MARK: - Actions:
     
-    @objc private func toggleEditingMode() {
-        if viewModel.isEditing {
-            //viewModel.saveChanges()
-            navigationItem.rightBarButtonItem?.title = "Редактировать"
-            navigationItem.leftBarButtonItem = nil
-        } else {
-            //viewModel.startEditing()
-            navigationItem.rightBarButtonItem?.title = "Сохранить"
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отмена", style: .plain, target: self, action: #selector(cancelEditing))
-        }
-    }
-    
-    @objc private func cancelEditing() {
-        //viewModel.cancelEditing()
-        navigationItem.rightBarButtonItem?.title = "Редактировать"
-        navigationItem.leftBarButtonItem = nil
-        // Восстановление данных заметки до начала редактирования
+    @objc private func editButtonTapped() {
+        viewModel.editButtonTapped()
     }
 }

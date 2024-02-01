@@ -23,6 +23,9 @@
 		E2EB1BA82B6A77910046D764 /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1BA72B6A77910046D764 /* NoteViewModel.swift */; };
 		E2EB1BAA2B6A77BB0046D764 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1BA92B6A77BB0046D764 /* NoteViewController.swift */; };
 		E2EB1BAC2B6A7ADC0046D764 /* NoteViewControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1BAB2B6A7ADC0046D764 /* NoteViewControllerCoordinator.swift */; };
+		E2EB1BB12B6B072E0046D764 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1BB02B6B072E0046D764 /* EditViewController.swift */; };
+		E2EB1BB32B6B073A0046D764 /* EditViewControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1BB22B6B073A0046D764 /* EditViewControllerCoordinator.swift */; };
+		E2EB1BB62B6B07530046D764 /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB1BB52B6B07530046D764 /* EditViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		E2EB1BA72B6A77910046D764 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
 		E2EB1BA92B6A77BB0046D764 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		E2EB1BAB2B6A7ADC0046D764 /* NoteViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewControllerCoordinator.swift; sourceTree = "<group>"; };
+		E2EB1BB02B6B072E0046D764 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		E2EB1BB22B6B073A0046D764 /* EditViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewControllerCoordinator.swift; sourceTree = "<group>"; };
+		E2EB1BB52B6B07530046D764 /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,11 +82,10 @@
 		E287597B2B692BCA00EC6927 /* notes */ = {
 			isa = PBXGroup;
 			children = (
-				E2EB1BA32B6A77690046D764 /* NoteModule */,
+				E2EB1BAD2B6B06F40046D764 /* Application */,
 				E2EB1B962B69327A0046D764 /* NotesListModule */,
-				E2EB1B8D2B6930250046D764 /* Coordinators */,
-				E287597C2B692BCA00EC6927 /* AppDelegate.swift */,
-				E287597E2B692BCA00EC6927 /* SceneDelegate.swift */,
+				E2EB1BA32B6A77690046D764 /* NoteModule */,
+				E2EB1BAE2B6B07010046D764 /* EditModule */,
 				E2EB1B9B2B69C41C0046D764 /* Helpers */,
 				E28759852B692BCC00EC6927 /* Assets.xcassets */,
 				E28759872B692BCC00EC6927 /* LaunchScreen.storyboard */,
@@ -169,6 +174,42 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		E2EB1BAD2B6B06F40046D764 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB1B8D2B6930250046D764 /* Coordinators */,
+				E287597C2B692BCA00EC6927 /* AppDelegate.swift */,
+				E287597E2B692BCA00EC6927 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		E2EB1BAE2B6B07010046D764 /* EditModule */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB1BB42B6B073F0046D764 /* ViewModel */,
+				E2EB1BAF2B6B071E0046D764 /* View */,
+				E2EB1BB22B6B073A0046D764 /* EditViewControllerCoordinator.swift */,
+			);
+			path = EditModule;
+			sourceTree = "<group>";
+		};
+		E2EB1BAF2B6B071E0046D764 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB1BB02B6B072E0046D764 /* EditViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E2EB1BB42B6B073F0046D764 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB1BB52B6B07530046D764 /* EditViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -243,7 +284,9 @@
 				E2EB1B912B6930840046D764 /* BaseCoordinator.swift in Sources */,
 				E2EB1B8F2B69306F0046D764 /* Coordinator.swift in Sources */,
 				E2EB1BAA2B6A77BB0046D764 /* NoteViewController.swift in Sources */,
+				E2EB1BB62B6B07530046D764 /* EditViewModel.swift in Sources */,
 				E2EB1B952B69310B0046D764 /* NotesViewControllerCoordinator.swift in Sources */,
+				E2EB1BB12B6B072E0046D764 /* EditViewController.swift in Sources */,
 				E2EB1B982B69BC4C0046D764 /* NotesViewModel.swift in Sources */,
 				E28759812B692BCA00EC6927 /* NotesViewController.swift in Sources */,
 				E2EB1B9D2B69C4280046D764 /* Observable.swift in Sources */,
@@ -253,6 +296,7 @@
 				E287597D2B692BCA00EC6927 /* AppDelegate.swift in Sources */,
 				E287597F2B692BCA00EC6927 /* SceneDelegate.swift in Sources */,
 				E2EB1BAC2B6A7ADC0046D764 /* NoteViewControllerCoordinator.swift in Sources */,
+				E2EB1BB32B6B073A0046D764 /* EditViewControllerCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
