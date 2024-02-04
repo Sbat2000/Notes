@@ -8,6 +8,7 @@
 import Foundation
 
 struct NoteModel {
+    let id: UUID
     let title: String
     let text: NSAttributedString
 }

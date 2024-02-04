@@ -58,7 +58,7 @@ final class EditViewController: UIViewController {
         button.tintColor = isBoldTextEnabled ? .systemBlue : .systemGray
         return button
     }()
-
+    
     private lazy var imageButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "Изображение", style: .plain, target: self, action: #selector(insertImage))
         return button
@@ -145,20 +145,20 @@ final class EditViewController: UIViewController {
     }
     
     @objc private func boldText() {
-         let selectedRange = noteTextView.selectedRange
-
-         guard selectedRange.length > 0 else {
-             isBoldTextEnabled.toggle()
-             return
-         }
+        let selectedRange = noteTextView.selectedRange
         
-         let currentAttributes = noteTextView.attributedText.attributes(at: selectedRange.location, effectiveRange: nil)
+        guard selectedRange.length > 0 else {
+            isBoldTextEnabled.toggle()
+            return
+        }
+        
+        let currentAttributes = noteTextView.attributedText.attributes(at: selectedRange.location, effectiveRange: nil)
         
         if let currentFont = currentAttributes[.font] as? UIFont {
             let systemFont = UIFont.systemFont(ofSize: 16)
             let boldSystemFont = UIFont.boldSystemFont(ofSize: 16)
             
-            if currentAttributes[.font] as? UIFont == boldSystemFont {
+            if currentFont == boldSystemFont {
                 let normalAttributes: [NSAttributedString.Key: Any] = [.font: systemFont]
                 noteTextView.textStorage.addAttributes(normalAttributes, range: selectedRange)
             } else {
@@ -170,7 +170,7 @@ final class EditViewController: UIViewController {
     
     @objc private func italicText() {
         let selectedRange = noteTextView.selectedRange
-
+        
         guard selectedRange.length > 0 else {
             isItalicTextEnabled.toggle()
             return
@@ -193,18 +193,18 @@ final class EditViewController: UIViewController {
     }
     
     private func applyTextAttributes() {
-            var attributes: [NSAttributedString.Key: Any] = [:]
-            
-            if isBoldTextEnabled {
-                attributes[.font] = UIFont.boldSystemFont(ofSize: 16)
-            }
-            
-            if isItalicTextEnabled {
-                attributes[.font] = UIFont.italicSystemFont(ofSize: 16)
-            }
-
-        noteTextView.typingAttributes = attributes
+        var attributes: [NSAttributedString.Key: Any] = [:]
+        
+        if isBoldTextEnabled {
+            attributes[.font] = UIFont.boldSystemFont(ofSize: 16)
         }
+        
+        if isItalicTextEnabled {
+            attributes[.font] = UIFont.italicSystemFont(ofSize: 16)
+        }
+        
+        noteTextView.typingAttributes = attributes
+    }
     
     
     //TODO: - image insert
