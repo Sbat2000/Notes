@@ -27,22 +27,24 @@ class NoteStorage {
         return persistentContainer.viewContext
     }
     
-    func saveNote(id: UUID = UUID(), title: String, text: NSAttributedString) {
-        let note = NoteCoreDataModel(context: context)
-        note.id = id
-        note.title = title
-        note.text = try? NSKeyedArchiver.archivedData(withRootObject: text, requiringSecureCoding: false)
-        saveContext()
-    }
-    
-    func updateNote(withId id: UUID, title: String, text: NSAttributedString) {
+    func saveOrUpdateNote(_ noteModel: NoteModel) {
         let fetchRequest: NSFetchRequest<NoteCoreDataModel> = NoteCoreDataModel.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
-        
-        if let noteToUpdate = try? context.fetch(fetchRequest).first {
-            noteToUpdate.title = title
-            noteToUpdate.text = try? NSKeyedArchiver.archivedData(withRootObject: text, requiringSecureCoding: false)
-            saveContext()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", noteModel.id as CVarArg)
+        do {
+            let results = try context.fetch(fetchRequest)
+            let note: NoteCoreDataModel
+
+            if let existingNote = results.first {
+                note = existingNote
+            } else {
+                note = NoteCoreDataModel(context: context)
+                note.id = noteModel.id
+            }
+            note.title = noteModel.title
+            note.text = try NSKeyedArchiver.archivedData(withRootObject: noteModel.text, requiringSecureCoding: true)
+            try context.save()
+        } catch {
+            print("Ошибка при сохранении или обновлении заметки: \(error)")
         }
     }
     

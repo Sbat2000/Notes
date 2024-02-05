@@ -137,7 +137,9 @@ final class EditViewController: UIViewController {
     //MARK: - Actions:
     
     @objc private func saveButtonPressed() {
-        
+        viewModel.updateText(noteTextView.attributedText)
+        viewModel.updateTitle(titleTextField.text ?? "")
+        viewModel.saveButtonPressed()
     }
     
     @objc private func cancelButtonPressed() {
@@ -221,7 +223,6 @@ final class EditViewController: UIViewController {
 extension EditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-            
         }
         picker.dismiss(animated: true, completion: nil)
     }

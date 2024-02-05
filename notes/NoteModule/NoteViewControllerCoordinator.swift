@@ -25,8 +25,8 @@ final class NoteViewControllerCoordinator: BaseCoordinator {
         navigationController.pushViewController(noteViewController, animated: true)
     }
     
-    func goToEdit(note: NoteModel) {
-        let editViewControllerCoordinator = EditViewControllerCoordinator(navigationController: navigationController, appCoordinator: appCoordinator, note: note)
+    func goToEdit(note: NoteModel, delegate: EditViewModelDelegate) {
+        let editViewControllerCoordinator = EditViewControllerCoordinator(navigationController: navigationController, appCoordinator: appCoordinator, note: note, delegate: delegate)
         editViewControllerCoordinator.start()
     }
 }

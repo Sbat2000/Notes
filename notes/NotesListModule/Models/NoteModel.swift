@@ -11,4 +11,10 @@ struct NoteModel {
     let id: UUID
     let title: String
     let text: NSAttributedString
+    
+    init(id: UUID? = nil, title: String, text: NSAttributedString) {
+        self.id = id ?? UUID()
+        self.title = title
+        self.text = text
+    }
 }

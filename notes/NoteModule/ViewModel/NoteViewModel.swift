@@ -27,6 +27,16 @@ final class NoteViewModel {
     }
     
     func editButtonTapped() {
-        noteViewControllerCoordinator.goToEdit(note: noteModelFromDB)
+        noteViewControllerCoordinator.goToEdit(note: currentNoteModel ?? noteModelFromDB, delegate: self)
+    }
+    
+    deinit {
+        print("Deinited \(self)")
+    }
+}
+
+extension NoteViewModel: EditViewModelDelegate {
+    func saveOrUpdateNote(note: NoteModel) {
+        self.currentNoteModel = note
     }
 }
