@@ -21,9 +21,7 @@ final class NoteViewModel {
     }
     
     func viewWillAppear() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-            self.currentNoteModel = self.noteModelFromDB
-        }
+        self.currentNoteModel = self.noteModelFromDB
     }
     
     func editButtonTapped() {

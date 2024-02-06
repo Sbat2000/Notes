@@ -29,8 +29,11 @@ class NotesViewController: UIViewController {
         setupNotesTableView()
         setupConstraints()
         bind()
-        viewModel?.viewWillAppear()
         setupNavigationItems()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel?.viewWillAppear()
     }
     
     //MARK: - Methods

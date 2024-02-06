@@ -65,7 +65,7 @@ final class NotesViewModel {
         let textAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 16)]
         completeText.append(NSAttributedString(string: text, attributes: textAttributes))
         completeText.append(imageString)
-        let additionalText = "\nА также редактировать и удалять (с помощью свайпа влево ячейки таблицы) заметки"
+        let additionalText = "\nА также редактировать и удалять (с помощью свайпа влево ячейки таблицы) заметки."
             completeText.append(NSAttributedString(string: additionalText, attributes: textAttributes))
         
         if let italicRange = completeText.string.range(of: "курсивом") {
