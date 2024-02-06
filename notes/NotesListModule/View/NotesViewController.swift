@@ -107,4 +107,18 @@ extension NotesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel?.didTapCell(indexPath: indexPath)
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (action, view, completionHandler) in
+            self.viewModel?.didSwipeToDelete(at: indexPath)
+            completionHandler(true)
+        }
+        let trashImage = UIImage(systemName: "trash.circle.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        deleteAction.image = trashImage
+        deleteAction.backgroundColor = .white
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
+    }
 }

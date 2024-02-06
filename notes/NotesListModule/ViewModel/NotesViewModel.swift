@@ -28,15 +28,21 @@ final class NotesViewModel {
     }
     
     func addButtonTapped() {
-        let note = NoteModel(title: "", text: NSAttributedString(string: ""))
+        let note = NoteModel(title: "Заметка", text: NSAttributedString(string: "Текст заметки"))
         notesViewControllerCoordinator?.goToEdit(note: note, delegate: self)
+    }
+    
+    func didSwipeToDelete(at indexPath: IndexPath) {
+        let note = listOfNotes[indexPath.row]
+        NoteStorage.shared.deleteNote(note)
+        self.fetchNotes()
     }
     
     private func fetchNotes() {
         let notes = NoteStorage.shared.fetchNotes()
-//        if notes.isEmpty {
-//            createFirstNote()
-//        }
+        if notes.isEmpty {
+            createFirstNote()
+        }
         let updatedNotes = NoteStorage.shared.fetchNotes()
         self.listOfNotes = updatedNotes
     }

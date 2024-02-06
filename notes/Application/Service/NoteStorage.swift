@@ -48,6 +48,25 @@ class NoteStorage {
         }
     }
     
+    func deleteNote(_ noteModel: NoteModel) {
+        let fetchRequest: NSFetchRequest<NoteCoreDataModel> = NoteCoreDataModel.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", noteModel.id as CVarArg)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            if let noteToDelete = results.first {
+                context.delete(noteToDelete)
+                try context.save()
+                print("Заметка успешно удалена.")
+            } else {
+                print("Заметка с указанным ID не найдена.")
+            }
+        } catch {
+            print("Ошибка при удалении заметки: \(error)")
+        }
+    }
+    
     func fetchNotes() -> [NoteModel] {
         let fetchRequest: NSFetchRequest<NoteCoreDataModel> = NoteCoreDataModel.fetchRequest()
         do {
