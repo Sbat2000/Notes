@@ -35,6 +35,8 @@ final class NoteViewModel {
     }
 }
 
+//MARK: - EditViewModelDelegate
+
 extension NoteViewModel: EditViewModelDelegate {
     func saveOrUpdateNote(note: NoteModel) {
         self.currentNoteModel = note

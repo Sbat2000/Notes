@@ -7,17 +7,16 @@
 
 import UIKit
 
-protocol NotesViewModelProtocol {
-    var numberOfNotes: Int { get }
-    func viewWillAppear()
-}
-
 final class NotesViewModel {
+    
+    //MARK: - Properties
     
     weak var notesViewControllerCoordinator: NotesViewControllerCoordinator?
     
     @Observable
     private (set) var listOfNotes: [NoteModel] = []
+    
+    //MARK: - Methods
     
     func viewWillAppear() {
         fetchNotes()
@@ -26,6 +25,11 @@ final class NotesViewModel {
     func didTapCell(indexPath: IndexPath) {
         let note = listOfNotes[indexPath.row]
         notesViewControllerCoordinator?.goToNoteViewController(note: note)
+    }
+    
+    func addButtonTapped() {
+        let note = NoteModel(title: "", text: NSAttributedString(string: ""))
+        notesViewControllerCoordinator?.goToEdit(note: note, delegate: self)
     }
     
     private func fetchNotes() {
@@ -53,5 +57,14 @@ final class NotesViewModel {
         }
         let note = NoteModel(title: "Первая заметка", text: attributedString)
         NoteStorage.shared.saveOrUpdateNote(note)
+    }
+}
+
+//MARK: - EditViewModelDelegate
+
+extension NotesViewModel: EditViewModelDelegate {
+    func saveOrUpdateNote(note: NoteModel) {
+        NoteStorage.shared.saveOrUpdateNote(note)
+        self.fetchNotes()
     }
 }

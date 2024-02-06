@@ -30,6 +30,7 @@ class NotesViewController: UIViewController {
         setupConstraints()
         bind()
         viewModel?.viewWillAppear()
+        setupNavigationItems()
     }
     
     //MARK: - Methods
@@ -47,6 +48,10 @@ class NotesViewController: UIViewController {
         view.addSubview(notesTableView)
     }
     
+    private func setupNavigationItems() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+    }
+    
     private func setupNotesTableView() {
         notesTableView.delegate = self
         notesTableView.dataSource = self
@@ -62,6 +67,13 @@ class NotesViewController: UIViewController {
             notesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             notesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
         ])
+    }
+    
+    //MARK: - Actions
+    
+    @objc
+    private func addButtonTapped() {
+        viewModel?.addButtonTapped()
     }
 }
 
