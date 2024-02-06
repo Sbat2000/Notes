@@ -196,6 +196,7 @@ final class EditViewController: UIViewController {
     
     private func applyTextAttributes() {
         var attributes: [NSAttributedString.Key: Any] = [:]
+        attributes[.font] = UIFont.systemFont(ofSize: 16)
         
         if isBoldTextEnabled {
             attributes[.font] = UIFont.boldSystemFont(ofSize: 16)
