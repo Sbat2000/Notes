@@ -225,9 +225,31 @@ final class EditViewController: UIViewController {
 
 extension EditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
-        }
         picker.dismiss(animated: true, completion: nil)
+        
+        guard let selectedImage = info[.originalImage] as? UIImage else { return }
+        
+        let targetWidth = noteTextView.bounds.width * 2 / 3
+        guard let resizedImage = selectedImage.resized(toWidth: targetWidth) else { return }
+        
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = resizedImage
+        
+        let imageString = NSMutableAttributedString(attachment: textAttachment)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
+        let attributedStringWithLineBreaks = NSMutableAttributedString(string: "\n")
+        attributedStringWithLineBreaks.append(imageString)
+        attributedStringWithLineBreaks.append(NSAttributedString(string: "\n"))
+        
+        attributedStringWithLineBreaks.addAttributes([.paragraphStyle: paragraphStyle], range: NSRange(location: 0, length: attributedStringWithLineBreaks.length))
+        
+        if noteTextView.selectedRange.location != NSNotFound {
+            noteTextView.textStorage.insert(attributedStringWithLineBreaks, at: noteTextView.selectedRange.location)
+        } else {
+            noteTextView.textStorage.append(attributedStringWithLineBreaks)
+        }
     }
 }
 

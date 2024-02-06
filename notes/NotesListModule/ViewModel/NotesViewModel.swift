@@ -48,20 +48,25 @@ final class NotesViewModel {
     }
     
     private func createFirstNote() {
-        let text = "Это первая заметка, это первая заметка"
-        let attributedString = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)])
+        let image = UIImage(resource: .sobaka)
         
-        let boldAttribute = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)]
-        let italicAttribute = [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 16)]
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = image.resized(toWidth: 300)
+        let imageString = NSAttributedString(attachment: textAttachment)
         
-        if let firstSpaceRange = text.range(of: " "), let lastSpaceRange = text.range(of: " ", options: .backwards) {
-            let boldRange = NSRange(text.startIndex..<firstSpaceRange.lowerBound, in: text)
-            let italicRange = NSRange(lastSpaceRange.upperBound..<text.endIndex, in: text)
-            
-            attributedString.addAttributes(boldAttribute, range: boldRange)
-            attributedString.addAttributes(italicAttribute, range: italicRange)
+        let completeText = NSMutableAttributedString()
+        completeText.append(NSAttributedString(string: "Тут можно писать курсивом, писать жирным, вставлять картинку, например моей собаки, которая не успела убежать:\n"))
+        completeText.append(imageString)
+        completeText.append(NSAttributedString(string: "\nА также редактировать и удалять (с помощью свайпа влево ячейки таблицы) заметки"))
+        
+        if let italicRange = completeText.string.range(of: "курсивом") {
+            completeText.addAttributes([.font: UIFont.italicSystemFont(ofSize: 16)], range: NSRange(italicRange, in: completeText.string))
         }
-        let note = NoteModel(title: "Первая заметка", text: attributedString)
+        if let boldRange = completeText.string.range(of: "жирным") {
+            completeText.addAttributes([.font: UIFont.boldSystemFont(ofSize: 16)], range: NSRange(boldRange, in: completeText.string))
+        }
+        
+        let note = NoteModel(title: "Первая заметка", text: completeText)
         NoteStorage.shared.saveOrUpdateNote(note)
     }
 }
