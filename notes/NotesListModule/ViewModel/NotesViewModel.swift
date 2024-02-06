@@ -28,7 +28,13 @@ final class NotesViewModel {
     }
     
     func addButtonTapped() {
-        let note = NoteModel(title: "Заметка", text: NSAttributedString(string: "Текст заметки"))
+        let text = "Текст заметки"
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 16)
+        ]
+        
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        let note = NoteModel(title: "Заметка", text: attributedString)
         notesViewControllerCoordinator?.goToEdit(note: note, delegate: self)
     }
     
@@ -55,9 +61,12 @@ final class NotesViewModel {
         let imageString = NSAttributedString(attachment: textAttachment)
         
         let completeText = NSMutableAttributedString()
-        completeText.append(NSAttributedString(string: "Тут можно писать курсивом, писать жирным, вставлять картинку, например моей собаки, которая не успела убежать:\n"))
+        let text = "Тут можно писать курсивом, писать жирным, вставлять картинку, например моей собаки, которая не успела убежать:\n"
+        let textAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 16)]
+        completeText.append(NSAttributedString(string: text, attributes: textAttributes))
         completeText.append(imageString)
-        completeText.append(NSAttributedString(string: "\nА также редактировать и удалять (с помощью свайпа влево ячейки таблицы) заметки"))
+        let additionalText = "\nА также редактировать и удалять (с помощью свайпа влево ячейки таблицы) заметки"
+            completeText.append(NSAttributedString(string: additionalText, attributes: textAttributes))
         
         if let italicRange = completeText.string.range(of: "курсивом") {
             completeText.addAttributes([.font: UIFont.italicSystemFont(ofSize: 16)], range: NSRange(italicRange, in: completeText.string))
