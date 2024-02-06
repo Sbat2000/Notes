@@ -20,7 +20,7 @@ final class EditViewController: UIViewController {
     
     private var isItalicTextEnabled = false {
         didSet {
-            italicButton.tintColor = isBoldTextEnabled ? .systemBlue : .systemGray
+            italicButton.tintColor = isItalicTextEnabled ? .systemBlue : .systemGray
         }
     }
     
@@ -147,6 +147,7 @@ final class EditViewController: UIViewController {
     }
     
     @objc private func boldText() {
+        isItalicTextEnabled = false
         let selectedRange = noteTextView.selectedRange
         
         guard selectedRange.length > 0 else {
@@ -171,6 +172,7 @@ final class EditViewController: UIViewController {
     }
     
     @objc private func italicText() {
+        isBoldTextEnabled = false
         let selectedRange = noteTextView.selectedRange
         
         guard selectedRange.length > 0 else {

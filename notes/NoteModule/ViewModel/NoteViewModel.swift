@@ -38,5 +38,6 @@ final class NoteViewModel {
 extension NoteViewModel: EditViewModelDelegate {
     func saveOrUpdateNote(note: NoteModel) {
         self.currentNoteModel = note
+        NoteStorage.shared.saveOrUpdateNote(note)
     }
 }
